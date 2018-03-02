@@ -34,27 +34,15 @@ public class zxxResponse {
 			byte[] header = header("HTTP/1.1 200 OK").getBytes();
 			byte[] body = body("").getBytes();
 			byte[] bytes = new byte[1024];
-			
-			int count = 0;
-			int total = 0;
-			while ((count=f.read(bytes))!=-1) {
-				total = count + total;
+			while (f.read(bytes)!=-1) {
+				body = this.byteAppend(body, bytes);
 			}
-			byte[] body2 = new byte[total];
+			
 			
 			System.out.println("port has been used9");
 			
-			f.reset();
-			int count2 = 0;
-			int total2 = 0;
-			while ((count2 = f.read(bytes))!=-1) {
-				System.arraycopy(bytes, 0, body2, total2, bytes.length);
-				total2 = total2 + count2;
-			}
-			System.out.println("port has been used10");
-			System.arraycopy(bytes, 0, body2, total2, bytes.length);
 			res = this.byteAppend(header, body);
-			res = this.byteAppend(res, body2);
+			
 			
 		} catch (Exception e) {
 			// TODO: handle exception
